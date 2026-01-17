@@ -1,101 +1,62 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# Person Parse
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
+## Overview
+This repository explores the problem of parsing and normalising personal name data from loosely structured input.
 
+It was created to address a common integration challenge encountered in real-world systems:  
+**human names do not follow strict or predictable formats.**
 
-## Instalations
+---
 
-Download 
+## Problem Context
+Many systems (HR platforms, CRM tools, legacy databases, imports) rely on personal data that:
+- originates from free-text input
+- uses inconsistent ordering
+- mixes titles, middle names and initials
+- varies across cultures and formats
 
-#git clone https://github.com/etherneco/personparse.git
+Despite appearing simple, name parsing quickly becomes non-trivial at scale.
 
-Run composer
+---
 
-#composer install
+## Approach
+This project focuses on:
+- separating structured intent from raw input
+- applying deterministic parsing rules
+- handling common edge cases without overfitting
+- keeping logic transparent and explainable
 
-Run webserwer
-#php artisan serve  --host=192.168.56.101
-Laravel development server started: <http://192.168.56.101:8000>
+The goal is not perfect accuracy, but **predictable and debuggable behaviour**.
 
-## About Homeowners
-It provided with a CSV from an estate agent containing an export of their
-homeowner data. If there are multiple homeowners, the estate agent has been entering both
-people into one field, often in different formats.
+---
 
+## Use Cases
+- Data migration and imports
+- HR and recruitment systems
+- CRM integrations
+- Normalisation of legacy datasets
 
+---
 
+## Design Principles
+- Deterministic over probabilistic
+- Explicit rules over hidden heuristics
+- Simplicity over completeness
+- Explainability over magic
 
-This system parse person data as individual person records with the following schema:
+---
 
-Person
+## Status
+- Experimental utility
+- Proof of concept
+- Used to explore parsing strategies rather than deliver a final product
 
-● title - required
+---
 
-● first_name - optional
+## Why This Project Exists
+This repository demonstrates:
+- awareness of real-world data quality problems
+- experience with edge cases in human-entered data
+- preference for transparent logic over black-box solutions
 
-● initial - optional
-
-● last_name - required
-
-Write a program that can accept the CSV and output an array of people, splitting the name into
-the correct fields, and splitting multiple people from one string where appropriate.
-For example, the string “Mr & Mrs Smith” would be split into 2 people.
-
-Example Outputs
-
-Input
-
-“Mr John Smith”
-
-Output
-
-$person[‘title’] => ‘Mr’,
-
-$person[‘first_name’] => “John”,
-
-$person[‘initial’] => null,
-
-$person[‘last_name’] => “Smith”
-
-Input
-
-“Mr and Mrs Smith”
-
-Output -
-
-$person[‘title’] => ‘Mr’,
-
-$person[‘first_name’] => null,
-
-$person[‘initial’] => null,
-
-$person[‘last_name’] => “Smith”
-
-$person[‘title’] => ‘Mrs’,
-
-$person[‘first_name’] => null,
-
-$person[‘initial’] => null,
-
-$person[‘last_name’] => “Smith”
-
-Input
-
-“Mr J. Smith”
-
-
-Output
-
-$person[‘title’] => ‘Mr’,
-
-$person[‘first_name’] => null,
-
-$person[‘initial’] => “J”,
-
-$person[‘last_name’] => “Smith”
-
-
-
+It reflects practical engineering trade-offs rather than theoretical completeness.
