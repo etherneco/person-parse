@@ -1,62 +1,37 @@
 # Person Parse
 
 ## Overview
-This repository explores the problem of parsing and normalising personal name data from loosely structured input.
+Person Parse is a compact PHP/Laravel utility that normalizes human names from free‑text input into structured fields. It tackles real‑world data messiness (titles, initials, compound surnames, suffixes) with deterministic, explainable rules.
 
-It was created to address a common integration challenge encountered in real-world systems:  
-**human names do not follow strict or predictable formats.**
+## What a recruiter should notice
+- Practical data engineering: handles inconsistent, user‑entered names without relying on opaque ML.
+- Clear parsing pipeline: predictable steps for splitting, normalizing, and classifying tokens.
+- Edge‑case focus: compound surnames, initials, suffixes, and nickname markers.
+- Maintainable code: explicit rules, simple helpers, and testable entry points.
 
----
+## Tech stack
+- PHP 7.1+
+- Laravel 5.8 (project scaffold)
 
-## Problem Context
-Many systems (HR platforms, CRM tools, legacy databases, imports) rely on personal data that:
-- originates from free-text input
-- uses inconsistent ordering
-- mixes titles, middle names and initials
-- varies across cultures and formats
+## Key entry points
+- Parser: `app/Parse/Person.php`
+- Splitter for "X and Y" cases: `app/Parse/Splite.php`
+- Dictionary rules: `app/Parse/Dictionary.php`
+- Helpers: `app/Parse/Helper.php`
 
-Despite appearing simple, name parsing quickly becomes non-trivial at scale.
+## Example usage
+```php
+use App\Parse\Person;
 
----
+$parsed = Person::parse('Dr. Anna K. van Helsing, PhD');
+```
 
-## Approach
-This project focuses on:
-- separating structured intent from raw input
-- applying deterministic parsing rules
-- handling common edge cases without overfitting
-- keeping logic transparent and explainable
+## Notes on design
+- Deterministic over probabilistic.
+- Transparent rules over hidden heuristics.
+- Focused scope: useful, explainable behavior rather than universal coverage.
 
-The goal is not perfect accuracy, but **predictable and debuggable behaviour**.
-
----
-
-## Use Cases
-- Data migration and imports
-- HR and recruitment systems
-- CRM integrations
-- Normalisation of legacy datasets
-
----
-
-## Design Principles
-- Deterministic over probabilistic
-- Explicit rules over hidden heuristics
-- Simplicity over completeness
-- Explainability over magic
-
----
-
-## Status
-- Experimental utility
-- Proof of concept
-- Used to explore parsing strategies rather than deliver a final product
-
----
-
-## Why This Project Exists
-This repository demonstrates:
-- awareness of real-world data quality problems
-- experience with edge cases in human-entered data
-- preference for transparent logic over black-box solutions
-
-It reflects practical engineering trade-offs rather than theoretical completeness.
+## Suggested improvements (future work)
+- Add unit tests for more locale‑specific formats.
+- Expand dictionary coverage for additional cultures.
+- Provide a small CLI or API wrapper for batch normalization.
